@@ -2,11 +2,10 @@ package main
 
 import (
 	"flag"
-	"fmt"
+//	"fmt"
 	"github.com/emilioastarita/lyricfier2/icon"
 	"github.com/emilioastarita/lyricfier2/internal/lyricfier"
 	"github.com/getlantern/systray"
-	"github.com/pkg/browser"
 )
 
 var lyricfierMain *lyricfier.Main
@@ -23,30 +22,30 @@ func main() {
 	lyricfierMain.Init()
 	lyricfierMain.Lookup()
 
-	onOpenBrowser := func() {
-		url := "http://" + *address + ":" + *port
-		browser.OpenURL(url)
-		fmt.Printf("=> Open your browser at: \033[1;36m%s\033[0m\n", url)
-	}
+//	onOpenBrowser := func() {
+//		url := "http://" + *address + ":" + *port
+//		browser.OpenURL(url)
+//		fmt.Printf("=> Open your browser at: \033[1;36m%s\033[0m\n", url)
+//	}
 
 	onExit := func() {}
 	onReady := func() {
 		systray.SetTemplateIcon(icon.Data, icon.Data)
 		systray.SetTooltip("Lyricfier")
-		url := "http://" + *address + ":" + *port
-		mOpenBrowser := systray.AddMenuItem("Open Lyricfier", "Or visit with your browser at:"+url)
+//		url := "http://" + *address + ":" + *port
+//		mOpenBrowser := systray.AddMenuItem("Open Lyricfier", "Or visit with your browser at:"+url)
 		mQuitOrig := systray.AddMenuItem("Quit", "Quit lyricfier")
 		go func() {
 			for {
 				select {
-				case <-mOpenBrowser.ClickedCh:
-					go onOpenBrowser()
+//				case <-mOpenBrowser.ClickedCh:
+//					go onOpenBrowser()
 				case <-mQuitOrig.ClickedCh:
 					systray.Quit()
 				}
 			}
 		}()
-		go onOpenBrowser()
+//		go onOpenBrowser()
 
 		go func() {
 			lyricfierMain.StartServer(*address + ":" + *port)
